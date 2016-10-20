@@ -8,3 +8,7 @@ class Edge:
         self.dst = dst
         self.distance = attrs[0] # Distane value on first position by default.
         self.attrs = attrs
+
+    def connect_nodes(self):
+        return (self.src, self.dst)
+        
