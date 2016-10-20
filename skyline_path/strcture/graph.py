@@ -15,5 +15,7 @@ class Graph:
 
     def __init_nodes_from_edges(self):
         for edge in self.edges:
-            if edge.src not in self.nodes: self.nodes += (edge.src, )
-            if edge.dst not in self.nodes: self.nodes += (edge.dst, )
+            if edge.src not in self.nodes: 
+                self.nodes += (edge.src, )
+            if edge.dst not in self.nodes: 
+                self.nodes += (edge.dst, )
