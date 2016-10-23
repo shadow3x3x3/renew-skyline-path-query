@@ -33,9 +33,12 @@ class MultiAttributeGraph:
                    paths.append(newpath)
         return paths
 
+    def _attribute_between(self, node1, node2):
+        return self.attributes[(node1, node2)]
+
     def __init_nodes_from_edges(self):
         for edge in self.edges:
-            if edge.src not in self.nodes: 
+            if edge.src not in self.nodes:
                 self.nodes += (edge.src, )
             if edge.dst not in self.nodes: 
                 self.nodes += (edge.dst, )
