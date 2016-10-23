@@ -90,3 +90,4 @@ ENV/
 
 test.py
 data/
+.vscode/
