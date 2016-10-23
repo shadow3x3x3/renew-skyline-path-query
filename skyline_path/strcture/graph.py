@@ -15,6 +15,21 @@ class Graph:
         self.__init_nodes_from_edges()
         self.__init_neighbors()
 
+    def find_paths(self, src, dst):
+        return self._path_recursive(src, dst)
+
+    def _path_recursive(self, cur, dst, path=[]):
+        path = path + [cur]
+        if cur == dst:
+            return [path]
+        paths = []
+        for neighbor in self.neighbors[cur]:
+            if neighbor not in path:
+               newpaths = self._path_recursive(neighbor, dst, path)
+               for newpath in newpaths:
+                   paths.append(newpath)
+        return paths
+
     def __init_nodes_from_edges(self):
         for edge in self.edges:
             if edge.src not in self.nodes: 
