@@ -1,6 +1,7 @@
-class Graph:
+class MultiAttributeGraph:
     """
     Record Basic Graph Data.
+    Include Multi-Attribute edges.
     """
     def __init__(self):
         self.nodes = ()
