@@ -20,6 +20,9 @@ class MultiAttributeGraph:
         self.__init_attributes()
 
     def find_paths(self, src, dst):
+        """
+        Find all possible paths without cycle.
+        """
         return self._path_recursive(src, dst)
 
     def _path_recursive(self, cur, dst, path=None):
