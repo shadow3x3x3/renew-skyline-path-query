@@ -5,6 +5,7 @@ class MultiAttributeGraph:
     """
     def __init__(self):
         self.nodes = ()
+        self.edges = ()
         self.attributes = {}
         self.neighbors = {}
 
@@ -21,28 +22,31 @@ class MultiAttributeGraph:
     def find_paths(self, src, dst):
         return self._path_recursive(src, dst)
 
-    def _path_recursive(self, cur, dst, path=[]):
+    def _path_recursive(self, cur, dst, path=None):
+        if path is None:
+            path = []
         path = path + [cur]
         if cur == dst:
             return [path]
         paths = []
         for neighbor in self.neighbors[cur]:
             if neighbor not in path:
-               newpaths = self._path_recursive(neighbor, dst, path)
-               for newpath in newpaths:
-                   paths.append(newpath)
+                newpaths = self._path_recursive(neighbor, dst, path)
+                for newpath in newpaths:
+                    paths.append(newpath)
         return paths
 
-    def _attribute_between(self, node1, node2):
-        return self.attributes[(node1, node2)]
+    def _attributes_between(self, node1, node2):
+        return self.attributes.get((node1, node2),
+                                   self.attributes.get((node2, node1)))
 
     def __init_nodes_from_edges(self):
         for edge in self.edges:
             if edge.src not in self.nodes:
                 self.nodes += (edge.src, )
-            if edge.dst not in self.nodes: 
+            if edge.dst not in self.nodes:
                 self.nodes += (edge.dst, )
-    
+
     def __init_neighbors(self):
         for node in self.nodes:
             self.neighbors[node] = self.__find_neighbors_by(node)
@@ -55,7 +59,7 @@ class MultiAttributeGraph:
             if edge.dst == node:
                 result += (edge.src, )
         return result
-    
+
     def __init_attributes(self):
         for edge in self.edges:
             self.attributes[edge.connect_nodes()] = edge.attrs
