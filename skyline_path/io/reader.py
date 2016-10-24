@@ -10,11 +10,11 @@ def read_edges_data(file_path):
     for line in open(file_path, 'r', encoding='UTF-8'):
         # remove /n and split to string array
         # then making string array to int array
-        raw_edge = list(map(int, line.rstrip().split(' ')))
+        raw_edge = list(map(float, line.rstrip().split(' ')))
         edges.append(
-            Edge(raw_edge[0], 
-                 raw_edge[1], 
-                 raw_edge[2], 
+            Edge(raw_edge[0],
+                 raw_edge[1],
+                 raw_edge[2],
                  raw_edge[3:])
             )
     return edges
