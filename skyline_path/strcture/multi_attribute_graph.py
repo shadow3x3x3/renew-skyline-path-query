@@ -17,7 +17,7 @@ class MultiAttributeGraph:
         self.edges = tuple(edges)
         self.__init_nodes_from_edges()
         self.__init_neighbors()
-        self.__init_attributes()
+        self.__init_attrs()
 
     def find_paths(self, src, dst):
         """
@@ -39,7 +39,7 @@ class MultiAttributeGraph:
                     paths.append(newpath)
         return paths
 
-    def _attributes_between(self, node1, node2):
+    def _attrs_between(self, node1, node2):
         return self.attributes.get((node1, node2),
                                    self.attributes.get((node2, node1)))
 
@@ -63,6 +63,6 @@ class MultiAttributeGraph:
                 result += (edge.src, )
         return result
 
-    def __init_attributes(self):
+    def __init_attrs(self):
         for edge in self.edges:
             self.attributes[edge.connect_nodes()] = edge.attrs
