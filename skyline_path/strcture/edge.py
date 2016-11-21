@@ -6,7 +6,7 @@ class Edge:
         self.id = id
         self.src = src
         self.dst = dst
-        self.distance = attrs[0] # Distane value on first position by default.
+        self.distance = attrs[0] # Distance value on first position by default.
         self.attrs = attrs
 
     def connect_nodes(self):
