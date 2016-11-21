@@ -25,6 +25,10 @@ class MultiAttributeGraph:
         """
         return self._path_recursive(src, dst)
 
+    def attrs_between(self, node1, node2):
+        return self.attributes.get((node1, node2),
+                                   self.attributes.get((node2, node1)))
+
     def _path_recursive(self, cur, dst, path=None):
         if path is None:
             path = []
@@ -38,10 +42,6 @@ class MultiAttributeGraph:
                 for newpath in newpaths:
                     paths.append(newpath)
         return paths
-
-    def _attrs_between(self, node1, node2):
-        return self.attributes.get((node1, node2),
-                                   self.attributes.get((node2, node1)))
 
     def __init_nodes_from_edges(self):
         for edge in self.edges:

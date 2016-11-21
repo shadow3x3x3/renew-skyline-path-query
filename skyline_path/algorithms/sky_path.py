@@ -85,4 +85,4 @@ class SkyPath(MultiAttributeGraph):
         return [(path[i], path[i+1]) for i in range(len(path[:-1]))]
 
     def __edges_to_attrs(self, edges):
-        return map(lambda e: self._attrs_between(e[0], e[1]), edges)
+        return map(lambda e: self.attrs_between(e[0], e[1]), edges)
