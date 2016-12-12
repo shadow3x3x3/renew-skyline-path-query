@@ -4,8 +4,8 @@ class MultiAttributeGraph:
     Include Multi-Attribute edges.
     """
     def __init__(self):
-        self.nodes = ()
-        self.edges = ()
+        self.nodes = set()
+        self.edges = set()
         self.attributes = {}
         self.neighbors = {}
 
@@ -21,7 +21,7 @@ class MultiAttributeGraph:
 
     def find_paths(self, src, dst):
         """
-        Find all possible paths without cycle.
+        Find all possible paths without cycles.
         """
         return self._path_recursive(src, dst)
 
@@ -46,21 +46,21 @@ class MultiAttributeGraph:
     def __init_nodes_from_edges(self):
         for edge in self.edges:
             if edge.src not in self.nodes:
-                self.nodes += (edge.src, )
+                self.nodes.add(edge.src)
             if edge.dst not in self.nodes:
-                self.nodes += (edge.dst, )
+                self.nodes.add(edge.dst)
 
     def __init_neighbors(self):
         for node in self.nodes:
             self.neighbors[node] = self.__find_neighbors_by(node)
 
     def __find_neighbors_by(self, node):
-        result = ()
+        result = set()
         for edge in self.edges:
             if edge.src == node:
-                result += (edge.dst, )
+                result.add(edge.dst)
             if edge.dst == node:
-                result += (edge.src, )
+                result.add(edge.src)
         return result
 
     def __init_attrs(self):
