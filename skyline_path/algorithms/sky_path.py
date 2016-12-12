@@ -2,18 +2,17 @@ from functools import reduce
 
 from skyline_path.core import SkylineStatus
 from skyline_path.core.dominate import dominate_check
-from skyline_path.strcture.multi_attribute_graph import MultiAttributeGraph
 from skyline_path.core.edge_helper import aggregate
 
-class SkyPath(MultiAttributeGraph):
+class SkyPath:
     """
     Implement SkyPath Algorithm.
-    Inherit from MultiAttributeGraph
+    composite with MultiAttributeGraph
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, mag):
         # record partial skyline paths and full skyline paths
         # with their attributes
+        self.mag = mag
         self.partial_sp = {}
         self.full_sp = {}
 
@@ -31,7 +30,7 @@ class SkyPath(MultiAttributeGraph):
         if cur == dst:
             self.__add_new_sp_check(path)
             return
-        for neighbor in self.neighbors[cur]:
+        for neighbor in self.mag.neighbors[cur]:
             if self.__next_hop(neighbor, path):
                 self._path_recursive(neighbor, dst, path)
 
@@ -85,4 +84,4 @@ class SkyPath(MultiAttributeGraph):
         return [(path[i], path[i+1]) for i in range(len(path[:-1]))]
 
     def __edges_to_attrs(self, edges):
-        return map(lambda e: self.attrs_between(e[0], e[1]), edges)
+        return map(lambda e: self.mag.attrs_between(e[0], e[1]), edges)
