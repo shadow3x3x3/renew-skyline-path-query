@@ -36,11 +36,10 @@ class MultiAttributeGraph:
         if cur == dst:
             return [path]
         paths = []
-        for neighbor in self.neighbors[cur]:
-            if neighbor not in path:
-                newpaths = self._path_recursive(neighbor, dst, path)
-                for newpath in newpaths:
-                    paths.append(newpath)
+        for neighbor in self.neighbors[cur] - set(path):
+            newpaths = self._path_recursive(neighbor, dst, path)
+            for newpath in newpaths:
+                paths.append(newpath)
         return paths
 
     def __init_nodes_from_edges(self):

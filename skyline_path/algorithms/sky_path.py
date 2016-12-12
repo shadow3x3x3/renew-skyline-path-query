@@ -30,13 +30,11 @@ class SkyPath:
         if cur == dst:
             self.__add_new_sp_check(path)
             return
-        for neighbor in self.mag.neighbors[cur]:
+        for neighbor in self.mag.neighbors[cur] - set(path):
             if self.__next_hop(neighbor, path):
                 self._path_recursive(neighbor, dst, path)
 
     def __next_hop(self, neighbor, path):
-        if neighbor in path:
-            return False
         target_attrs = self.__attrs_in(path + [neighbor])
         if self.__partial_dominace(path + [neighbor], target_attrs):
             return False
