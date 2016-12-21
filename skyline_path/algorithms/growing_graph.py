@@ -21,33 +21,3 @@ class GrowingGraph:
         return 'GrowingGraph(out:{}, in:{})'.format(
             self.outer_nodes, self.inner_nodes
         )
-
-# testing
-if __name__ == '__main__':
-    neighbors_table = {
-        1: (2, 3, 4, 5, 14),
-        2: (1, 6, 7, 13),
-        3: (1, 11, 12, 13),
-        4: (1, 5, 8),
-        5: (1, 4, 9, 10),
-        6: (2, ),
-        7: (2, ),
-        8: (4, ),
-        9: (5, ),
-        10: (5, ),
-        11: (3, ),
-        12: (3, ),
-        13: (2, 3),
-        14: (1, )
-    }
-
-    gg = GrowingGraph(neighbors_table, [1, 2])
-    print(gg)
-    gg.growing()
-    print(gg)
-    gg.growing()
-    print(gg)
-    gg.growing()
-    print(gg)
-    gg.growing()
-    print(gg)
