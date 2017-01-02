@@ -18,6 +18,4 @@ class GrowingGraph:
                     self.outer_nodes.add(new_node)
 
     def __str__(self):
-        return 'GrowingGraph(out:{}, in:{})'.format(
-            self.outer_nodes, self.inner_nodes
-        )
+        return f'GrowingGraph(out:{self.outer_nodes}, in:{self.inner_nodes})'
