@@ -64,7 +64,7 @@ class SkyPath:
 
     def __add_new_sp_check(self, path):
         temp_attrs = self.__attrs_in(path)
-        # should use copy full sp due to changed size during iteration
+        # should use copy() full sp due to changed size during iteration
         for sp, existed_attrs in self.full_sp.copy().items():
             check = dominate_check(existed_attrs, temp_attrs)
             if check is SkylineStatus.DOMINATE:
