@@ -31,12 +31,12 @@ class TestRenewSelector(unittest.TestCase):
         self.assertEqual(second_edge, E3)
         self.assertEqual(third_edge, E4)
         self.assertEqual(fourth_edge, E1)
-    
+
     def test_get_edges(self):
         get_edges = self.rs.get_edges(2)
         self.assertEqual(get_edges[0], E2)
         self.assertEqual(get_edges[1], E3)
-    
+
     def test_use_edges(self):
         get_edges = self.rs.get_edges(2)
         self.rs.use_edges(get_edges[0])
