@@ -19,6 +19,11 @@ class MultiAttributeGraph:
         self.__init_neighbors()
         self.__init_attrs()
 
+    def replace_nodes(self, new_nodes):
+        self.nodes = new_nodes
+        self.neighbors.clear()
+        self.__init_neighbors()
+
     def find_paths(self, src, dst):
         """
         Find all possible paths without cycles.
@@ -56,9 +61,9 @@ class MultiAttributeGraph:
     def __find_neighbors_by(self, node):
         result = set()
         for edge in self.edges:
-            if edge.src == node:
+            if edge.dst in self.nodes and edge.src == node:
                 result.add(edge.dst)
-            if edge.dst == node:
+            if edge.src in self.nodes and edge.dst == node:
                 result.add(edge.src)
         return result
 
