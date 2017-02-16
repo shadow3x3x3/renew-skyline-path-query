@@ -9,6 +9,4 @@ class Edge:
         self.distance = attrs[0] # Distance value on first position by default.
         self.attrs = attrs
         self.dynamic_attr = attrs[-1]
-
-    def connect_nodes(self):
-        return (self.src, self.dst)
+        self.connect_nodes = (self.src, self.dst)
