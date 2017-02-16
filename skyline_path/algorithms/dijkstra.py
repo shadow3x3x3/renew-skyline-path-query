@@ -5,13 +5,28 @@ class Dijkstra:
     Find the shorest path with dimension
     """
 
-    def __init__(self, graph):
+    def __init__(self, graph, cache=None):
         self.graph = graph
         self.q = set()
         self.dist = dict.fromkeys(graph.nodes, math.inf)
         self.prev = dict.fromkeys(graph.nodes, None)
+        self.cache = cache
 
     def shortest_path(self, src, dst):
+        def get_path(src, dst):
+            path = []
+            vertext = dst
+            while vertext is not None:
+                path.append(vertext)
+                vertext = self.prev[vertext]
+
+            path.reverse()
+            return path, self.dist[dst]
+
+        if self._is_cache(src, dst):
+            return get_path(src, dst)
+
+        self.__init__(self.graph, src)
         q = self.q
         dist = self.dist
         prev = self.prev
@@ -26,13 +41,11 @@ class Dijkstra:
                 if new_path < dist[n]:
                     dist[n] = new_path
                     prev[n] = v
+                if dist[dst] != math.inf:
+                    break
             q.add(v)
 
-        path = []
-        vertext = dst
-        while vertext is not None:
-            path.append(vertext)
-            vertext = prev[vertext]
+        return get_path(src, dst)
 
-        path.reverse()
-        return path
+    def _is_cache(self, src, dst):
+        return self.cache == src and self.dist[dst] != math.inf
