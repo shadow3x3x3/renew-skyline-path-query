@@ -12,6 +12,14 @@ class GrowingGraph:
             for old_node in self.outer_nodes.copy():
                 self._update_nodes(old_node)
 
+    def edges_size(self):
+        edges = []
+        for node in self.all_nodes():
+            for n in self.neighbors_table[node]:
+                if n in self.all_nodes() and {node, n} not in edges:
+                    edges.append({node, n})
+        return len(edges)
+
     def _update_nodes(self, old_node):
         new_nodes = set(self.neighbors_table[old_node])
         if new_nodes:
