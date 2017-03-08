@@ -21,18 +21,12 @@ def dominate_check(attrs_1, attrs_2):
     This is skyline query core method that is for
     dominating compare.
     """
-    if len(attrs_1) is not len(attrs_2):
-        raise DominatingException("lengths not match",
-                                  len(attrs_1) +
-                                  " is not match " +
-                                  len(attrs_2))
-
     check_flag = len(attrs_1)
     flag = 0
-    for i, attr in enumerate(attrs_1):
-        if attr > attrs_2[i]:
+    for a1, a2 in zip(attrs_1, attrs_2):
+        if a1 > a2:
             flag += 1
-        elif attr < attrs_2[i]:
+        elif a1 < a2:
             flag -= 1
         else:
             check_flag -= 1
