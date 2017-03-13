@@ -4,27 +4,33 @@ from skyline_path.query.skyline_query import skyline_query
 
 # params query_nodes_data: {nodes: values}
 class SpatialQuery:
-    def __init__(self, mag, target_edge):
+    def __init__(self, mag, target_edges):
         self.graph = mag
-        self.target_edge = target_edge
+        self.target_edges = target_edges
 
     def query(self, src, dst):
         return skyline_query(self._spatial_values(src, dst))
 
     def _spatial_values(self, src, dst):
         spatial_nodes = {}
-        for edge in self.target_edge:
+        for edge in self.target_edges:
             values = []
             nodes = edge.connect_nodes
             d = edge.dynamic_attr
             edge_dist = edge.distance
-            v, path1 = self._calc_attributes(src, nodes, d, edge_dist)
-            values.append(v)
-            v, path2 = self._calc_attributes(dst, nodes, d, edge_dist)
-            values.append(v)
-            path2.reverse()
-            path = path1 + path2
-            spatial_nodes[edge] = [values, path]
+
+            src_node_path, src_dist = calculate_distances(self.graph, nodes[0], src)
+            dst_node_path, dst_dist = calculate_distances(self.graph, nodes[0], dst)
+
+            if src_dist and dst_dist:
+                if src_dist > dst_dist: # we get dst to node0 and src to node1 here
+                    src_node_path, src_dist = calculate_distances(self.graph, nodes[1], src)
+                    values = [src_dist, dst_dist]
+                else:                   # we get dst to node1 and src to node0 here
+                    dst_node_path, dst_dist = calculate_distances(self.graph, nodes[1], dst)
+                    values = [src_dist, dst_dist]
+            full_path = src_node_path[::-1] + dst_node_path
+            spatial_nodes[edge] = [values, full_path]
         return spatial_nodes # { node ids: [value, path] }
 
     def _calc_attributes(self, query_node, nodes, d, edge_dist):
